@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Blast & RSVP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-body">
+
+  <div class="admin-container">
+    <header class="admin-header">
+      <h1>Dashboard Undangan</h1>
+      <p>Kelola daftar tamu, import CSV, blast WhatsApp, dan pantau RSVP.</p>
+    </header>
+
+    <section class="card">
+      <h3>1. Import Daftar Tamu (.CSV)</h3>
+      <p class="section-desc">Format kolom CSV: <code>nama,kategori,no_wa</code> (Contoh: <code>Budi Santoso,Teman Sekolah,08123456789</code>)</p>
+      <div class="csv-upload">
+        <input type="file" id="csv-file" accept=".csv">
+        <button id="upload-csv-btn" class="btn-primary">Upload ke Database</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header-flex">
+        <h3>2. Daftar Tamu & Blast WhatsApp</h3>
+        <span id="total-guests" class="badge">0 Tamu</span>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Kategori</th>
+              <th>No. WhatsApp</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="guest-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header-flex">
+        <h3>3. Data Konfirmasi Kehadiran (RSVP)</h3>
+        <div class="stats-pill">
+          <span id="stat-hadir" class="pill-green">Hadir: 0</span>
+          <span id="stat-tidak" class="pill-red">Tidak: 0</span>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Kategori</th>
+              <th>Status</th>
+              <th>Ucapan</th>
+            </tr>
+          </thead>
+          <tbody id="admin-rsvp-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast">Notifikasi</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

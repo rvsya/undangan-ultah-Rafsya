@@ -142,6 +142,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', triggerReveal);
 
+  async function loadRSVPs() {
+    const { data, error } = await supabaseClient.from('rsvps').select('*');
+    if (error) {
+      showToast('Gagal memuat data RSVP.');
+      return;
+    }
+    const rsvpCount = data.length;
+    document.getElementById('rsvp-count').textContent = rsvpCount;
+  }
+
   const rsvpForm = document.getElementById('rsvp-form');
   if (rsvpForm) {
     rsvpForm.addEventListener('submit', async (e) => {

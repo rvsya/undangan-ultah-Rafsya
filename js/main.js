@@ -3,27 +3,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const guestName = urlParams.get('to') || 'Tamu Spesial';
   const guestCategory = urlParams.get('cat') || 'Tamu Undangan';
 
-  const guestNameEl = document.getElementById('guest-name');
-  const headerGuestNameEl = document.getElementById('header-guest-name');
-  const guestCategoryEl = document.getElementById('guest-category');
+  document.getElementById('guest-name').textContent = guestName;
+  document.getElementById('header-guest-name').textContent = guestName;
+  document.getElementById('guest-category').textContent = guestCategory;
 
-  if (guestNameEl) guestNameEl.textContent = guestName;
-  if (headerGuestNameEl) headerGuestNameEl.textContent = guestName;
-  if (guestCategoryEl) guestCategoryEl.textContent = guestCategory;
-
-  const rsvpNameInput = document.getElementById('rsvp-name');
-  const rsvpCategorySelect = document.getElementById('rsvp-category');
-
-  if (urlParams.get('to') && rsvpNameInput) {
-    rsvpNameInput.value = guestName;
+  if (urlParams.get('to')) {
+    document.getElementById('rsvp-name').value = guestName;
   }
-  if (urlParams.get('cat') && rsvpCategorySelect) {
-    const optionExists = Array.from(rsvpCategorySelect.options).some(opt => opt.value === guestCategory);
+  if (urlParams.get('cat')) {
+    const catSelect = document.getElementById('rsvp-category');
+    const optionExists = Array.from(catSelect.options).some(opt => opt.value === guestCategory);
     if (!optionExists) {
       const newOpt = new Option(guestCategory, guestCategory);
-      rsvpCategorySelect.add(newOpt);
+      catSelect.add(newOpt);
     }
-    rsvpCategorySelect.value = guestCategory;
+    catSelect.value = guestCategory;
   }
 
   const coverSection = document.getElementById('cover-section');
@@ -33,51 +27,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const musicIcon = document.getElementById('music-icon');
   let isPlaying = false;
 
-  if (openBtn) {
-    openBtn.addEventListener('click', () => {
-      if (coverSection) coverSection.classList.add('opened');
-      document.body.classList.remove('locked');
-      if (musicBtn) musicBtn.classList.remove('hidden');
+  openBtn.addEventListener('click', () => {
+    coverSection.classList.add('opened');
+    document.body.classList.remove('locked');
+    musicBtn.classList.remove('hidden');
 
-      if (bgMusic) {
-        bgMusic.play().then(() => {
-          isPlaying = true;
-          if (musicIcon) musicIcon.textContent = '🔊';
-        }).catch(() => {
-          isPlaying = false;
-          if (musicIcon) musicIcon.textContent = '🔇';
-        });
-      }
-
-      triggerReveal();
+    bgMusic.play().then(() => {
+      isPlaying = true;
+      musicIcon.textContent = '🔊';
+    }).catch(() => {
+      isPlaying = false;
+      musicIcon.textContent = '🔇';
     });
-  }
 
-  if (musicBtn) {
-    musicBtn.addEventListener('click', () => {
-      if (!bgMusic) return;
-      if (isPlaying) {
-        bgMusic.pause();
-        if (musicIcon) musicIcon.textContent = '🔇';
-      } else {
-        bgMusic.play();
-        if (musicIcon) musicIcon.textContent = '🔊';
-      }
-      isPlaying = !isPlaying;
-    });
-  }
+    triggerReveal();
+  });
+
+  musicBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      bgMusic.pause();
+      musicIcon.textContent = '🔇';
+    } else {
+      bgMusic.play();
+      musicIcon.textContent = '🔊';
+    }
+    isPlaying = !isPlaying;
+  });
 
   const targetDate = new Date('June 2, 2027 18:30:00').getTime();
 
   function updateCountdown() {
-    const countdownEl = document.getElementById('countdown');
-    if (!countdownEl) return;
-
     const now = new Date().getTime();
     const distance = targetDate - now;
 
     if (distance < 0) {
-      countdownEl.innerHTML = '<p>Acara Sedang Berlangsung!</p>';
+      document.getElementById('countdown').innerHTML = '<p>Acara Sedang Berlangsung!</p>';
       return;
     }
 
@@ -86,44 +70,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
-
-    if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
-    if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-    if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
-    if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
   }
 
   setInterval(updateCountdown, 1000);
   updateCountdown();
 
-  const calendarLink = document.getElementById('calendar-link');
-  if (calendarLink) {
-    const calTitle = encodeURIComponent("Rafsya's Birthday Dinner");
-    const calDetails = encodeURIComponent("Acara Ulang Tahun Rafsya di Hachi Grill Alam Sutera");
-    const calLocation = encodeURIComponent("Hachi Grill Alam Sutera, Pakualam, Tangerang Selatan");
-    const calDates = "20270602T113000Z/20270602T143000Z";
-    calendarLink.href = `https://www.google.com/calendar/render?action=TEMPLATE&text=${calTitle}&dates=${calDates}&details=${calDetails}&location=${calLocation}`;
-  }
+  const calTitle = encodeURIComponent("Rafsya's Birthday Dinner");
+  const calDetails = encodeURIComponent("Acara Ulang Tahun Rafsya di Hachi Grill Alam Sutera");
+  const calLocation = encodeURIComponent("Hachi Grill Alam Sutera, Pakualam, Tangerang Selatan");
+  const calDates = "20270602T113000Z/20270602T143000Z";
+  document.getElementById('calendar-link').href = `https://www.google.com/calendar/render?action=TEMPLATE&text=${calTitle}&dates=${calDates}&details=${calDetails}&location=${calLocation}`;
 
   const copyBtn = document.getElementById('copy-btn');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', () => {
-      const textToCopy = copyBtn.getAttribute('data-copy');
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        showToast('Nomor rekening berhasil disalin!');
-      }).catch(() => {
-        showToast('Gagal menyalin nomor rekening.');
-      });
+  copyBtn.addEventListener('click', () => {
+    const textToCopy = copyBtn.getAttribute('data-copy');
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      showToast('Nomor rekening berhasil disalin!');
     });
-  }
+  });
 
   function showToast(msg) {
     const toast = document.getElementById('toast');
-    if (!toast) return;
     toast.textContent = msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3000);
@@ -142,50 +113,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', triggerReveal);
 
-  async function loadRSVPs() {
-    const { data, error } = await supabaseClient.from('rsvps').select('*');
-    if (error) {
-      showToast('Gagal memuat data RSVP.');
-      return;
-    }
-    const rsvpCount = data.length;
-    document.getElementById('rsvp-count').textContent = rsvpCount;
-  }
-
   const rsvpForm = document.getElementById('rsvp-form');
-  if (rsvpForm) {
-    rsvpForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const submitBtn = document.getElementById('submit-rsvp');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Mengirim...';
-      }
+  const rsvpList = document.getElementById('rsvp-list');
+  const rsvpCount = document.getElementById('rsvp-count');
 
-      const payload = {
-        name: document.getElementById('rsvp-name').value.trim(),
-        category: document.getElementById('rsvp-category').value,
-        status: document.getElementById('rsvp-status').value,
-        message: document.getElementById('rsvp-message').value.trim()
-      };
+  async function loadRsvps() {
+    const { data, error } = await supabaseClient
+      .from('rsvps')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-      try {
-        const { error } = await supabaseClient.from('rsvps').insert([payload]);
+    if (error) return;
 
-        if (!error) {
-          showToast('Konfirmasi kehadiran terkirim!');
-          document.getElementById('rsvp-message').value = '';
-        } else {
-          showToast('Gagal: ' + error.message);
-        }
-      } catch (err) {
-        showToast('Gagal mengirim data: ' + (err.message || 'kesalahan koneksi'));
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Kirim Konfirmasi';
-        }
-      }
-    });
+    rsvpCount.textContent = data.length;
+    rsvpList.innerHTML = data.map(item => `
+      <div class="rsvp-item">
+        <div class="rsvp-item-header">
+          <strong>${escapeHtml(item.name)} <small>(${escapeHtml(item.category)})</small></strong>
+          <span class="status-tag ${item.status === 'Hadir' ? 'status-hadir' : 'status-tidak'}">
+            ${escapeHtml(item.status)}
+          </span>
+        </div>
+        <p>${escapeHtml(item.message)}</p>
+      </div>
+    `).join('');
   }
+
+  rsvpForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = document.getElementById('submit-rsvp');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Mengirim...';
+
+    const payload = {
+      name: document.getElementById('rsvp-name').value.trim(),
+      category: document.getElementById('rsvp-category').value,
+      status: document.getElementById('rsvp-status').value,
+      message: document.getElementById('rsvp-message').value.trim()
+    };
+
+    const { error } = await supabaseClient.from('rsvps').insert([payload]);
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Kirim Konfirmasi';
+
+    if (!error) {
+      showToast('Konfirmasi kehadiran terkirim!');
+      document.getElementById('rsvp-message').value = '';
+      loadRsvps();
+    } else {
+      showToast('Gagal mengirim data.');
+    }
+  });
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  loadRsvps();
 });

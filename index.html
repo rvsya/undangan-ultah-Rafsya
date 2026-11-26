@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -169,4 +170,182 @@
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Ulang Tahun - Rafsya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="locked">
+
+  <audio id="bg-music" loop>
+    <source src="assets/audio/backsound.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="music-toggle" class="music-btn hidden" aria-label="Putar atau Jeda Musik">
+    <span id="music-icon">🔊</span>
+  </button>
+
+  <section id="cover-section" class="cover">
+    <div class="cover-overlay"></div>
+    <div class="cover-content">
+      <p class="subtitle">BIRTHDAY INVITATION</p>
+      <h1 class="main-title">Sweet Seventeen<br>Rafsya Almizan</h1>
+      <div class="profile-frame">
+        <img src="assets/img/profil.jpg" alt="Foto Profil">
+      </div>
+      <div class="guest-box">
+        <p class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+        <h2 id="guest-name" class="guest-name">Tamu Spesial</h2>
+        <span id="guest-category" class="guest-badge">Tamu Undangan</span>
+      </div>
+      <button id="open-invitation" class="btn-primary">
+        ✉️ Buka Undangan
+      </button>
+    </div>
+  </section>
+
+  <main id="main-content" class="container">
+    
+    <header class="hero-header reveal">
+      <p class="subtitle">YOU ARE INVITED TO</p>
+      <h2>Rafsya's Birthday Dinner</h2>
+      <p class="hero-guest">Halo, <strong id="header-guest-name">Tamu Spesial</strong>! Kehadiranmu sangat berarti untuk merayakan hari spesial ini bersama.</p>
+      
+      <div class="countdown" id="countdown">
+        <div class="time-box">
+          <span id="days">00</span>
+          <small>Hari</small>
+        </div>
+        <div class="time-box">
+          <span id="hours">00</span>
+          <small>Jam</small>
+        </div>
+        <div class="time-box">
+          <span id="minutes">00</span>
+          <small>Menit</small>
+        </div>
+        <div class="time-box">
+          <span id="seconds">00</span>
+          <small>Detik</small>
+        </div>
+      </div>
+
+      <a id="calendar-link" href="#" target="_blank" class="btn-outline">
+        📅 Simpan ke Google Calendar
+      </a>
+    </header>
+
+    <section class="card reveal">
+      <h3 class="section-title">Detail Acara</h3>
+      <div class="event-info">
+        <div class="info-item">
+          <span class="icon">🗓️</span>
+          <div>
+            <strong>Hari & Tanggal</strong>
+            <p>Rabu, 2 Juni 2027</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="icon">⏰</span>
+          <div>
+            <strong>Waktu</strong>
+            <p>18.30 WIB - Selesai</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="icon">📍</span>
+          <div>
+            <strong>Lokasi</strong>
+            <p>Hachi Grill Alam Sutera</p>
+            <small>Jl. Jalur Sutera Kav. 28D, Pakualam, Kec. Serpong Utara, Kota Tangerang Selatan, Banten</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-wrapper">
+        <iframe 
+          src="https://maps.google.com/maps?q=Hachi%20Grill%20Alam%20Sutera,%20Pakualam,%20Tangerang%20Selatan&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <a href="https://maps.google.com/?q=Hachi+Grill+Alam+Sutera+Tangerang+Selatan" target="_blank" class="btn-primary full-width">
+        🗺️ Buka Rute di Google Maps
+      </a>
+    </section>
+
+    <section class="card reveal">
+      <h3 class="section-title">Galeri Momen</h3>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="assets/img/foto1.jpg" alt="Foto 1"></div>
+        <div class="gallery-item"><img src="assets/img/foto2.jpg" alt="Foto 2"></div>
+        <div class="gallery-item"><img src="assets/img/foto3.jpg" alt="Foto 3"></div>
+        <div class="gallery-item"><img src="assets/img/foto4.jpg" alt="Foto 4"></div>
+      </div>
+    </section>
+
+    <section class="card reveal">
+      <h3 class="section-title">Kado Digital</h3>
+      <p class="section-desc">Doa dan kehadiranmu sudah merupakan hadiah terbaik. Namun jika ingin mengirimkan tanda kasih, dapat melalui rekening berikut:</p>
+      <div class="gift-box">
+        <div>
+          <strong>BCA - 1234567890</strong>
+          <p>a.n. Rafsya Almizan</p>
+        </div>
+        <button id="copy-btn" class="btn-outline small" data-copy="1234567890">Salin</button>
+      </div>
+    </section>
+
+    <section class="card reveal">
+      <h3 class="section-title">Konfirmasi Kehadiran (RSVP)</h3>
+      <form id="rsvp-form" class="rsvp-form">
+        <div class="form-group">
+          <label for="rsvp-name">Nama Lengkap</label>
+          <input type="text" id="rsvp-name" required placeholder="Masukkan namamu">
+        </div>
+        <div class="form-group">
+          <label for="rsvp-category">Hubungan / Kategori</label>
+          <select id="rsvp-category" required>
+            <option value="Teman Sekolah">Teman Sekolah</option>
+            <option value="Sahabat">Sahabat</option>
+            <option value="Keluarga">Keluarga</option>
+            <option value="Rekan">Rekan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="rsvp-status">Status Kehadiran</label>
+          <select id="rsvp-status" required>
+            <option value="Hadir">Hadir</option>
+            <option value="Tidak Hadir">Tidak Hadir</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="rsvp-message">Ucapan & Doa</label>
+          <textarea id="rsvp-message" rows="3" required placeholder="Tulis ucapan singkat..."></textarea>
+        </div>
+        <button type="submit" id="submit-rsvp" class="btn-primary full-width">Kirim Konfirmasi</button>
+      </form>
+
+      <div class="guestbook">
+        <h4>Ucapan & Kehadiran (<span id="rsvp-count">0</span>)</h4>
+        <div id="rsvp-list" class="rsvp-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast">Berhasil disalin!</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+>>>>>>> 106fc450e3bb3411468fecba986901d544da020a
 </html>

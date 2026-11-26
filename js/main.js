@@ -90,11 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const textToCopy = copyBtn.getAttribute('data-copy');
     navigator.clipboard.writeText(textToCopy).then(() => {
       showToast('Nomor rekening berhasil disalin!');
+    }).catch(() => {
+      showToast('Gagal menyalin nomor rekening.');
     });
   });
 
   function showToast(msg) {
     const toast = document.getElementById('toast');
+    if (!toast) return;
     toast.textContent = msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3000);
@@ -117,26 +120,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const rsvpList = document.getElementById('rsvp-list');
   const rsvpCount = document.getElementById('rsvp-count');
 
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text == null ? '' : String(text);
+    return div.innerHTML;
+  }
+
   async function loadRsvps() {
-    const { data, error } = await supabaseClient
-      .from('rsvps')
-      .select('*')
-      .order('created_at', { ascending: false });
+    try {
+      const { data, error } = await supabaseClient
+        .from('rsvps')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (error) return;
+      if (error) {
+        showToast('Gagal memuat ucapan: ' + error.message);
+        return;
+      }
 
-    rsvpCount.textContent = data.length;
-    rsvpList.innerHTML = data.map(item => `
-      <div class="rsvp-item">
-        <div class="rsvp-item-header">
-          <strong>${escapeHtml(item.name)} <small>(${escapeHtml(item.category)})</small></strong>
-          <span class="status-tag ${item.status === 'Hadir' ? 'status-hadir' : 'status-tidak'}">
-            ${escapeHtml(item.status)}
-          </span>
+      const list = data || [];
+      rsvpCount.textContent = list.length;
+      rsvpList.innerHTML = list.map(item => `
+        <div class="rsvp-item">
+          <div class="rsvp-item-header">
+            <strong>${escapeHtml(item.name)} <small>(${escapeHtml(item.category)})</small></strong>
+            <span class="status-tag ${item.status === 'Hadir' ? 'status-hadir' : 'status-tidak'}">
+              ${escapeHtml(item.status)}
+            </span>
+          </div>
+          <p>${escapeHtml(item.message || '')}</p>
         </div>
-        <p>${escapeHtml(item.message)}</p>
-      </div>
-    `).join('');
+      `).join('');
+    } catch (err) {
+      showToast('Gagal terhubung ke database.');
+    }
   }
 
   rsvpForm.addEventListener('submit', async (e) => {
@@ -152,25 +169,23 @@ document.addEventListener('DOMContentLoaded', () => {
       message: document.getElementById('rsvp-message').value.trim()
     };
 
-    const { error } = await supabaseClient.from('rsvps').insert([payload]);
+    try {
+      const { error } = await supabaseClient.from('rsvps').insert([payload]);
 
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Kirim Konfirmasi';
-
-    if (!error) {
-      showToast('Konfirmasi kehadiran terkirim!');
-      document.getElementById('rsvp-message').value = '';
-      loadRsvps();
-    } else {
-      showToast('Gagal mengirim data.');
+      if (!error) {
+        showToast('Konfirmasi kehadiran terkirim!');
+        document.getElementById('rsvp-message').value = '';
+        await loadRsvps();
+      } else {
+        showToast('Gagal: ' + error.message);
+      }
+    } catch (err) {
+      showToast('Gagal mengirim data: ' + (err.message || 'kesalahan koneksi'));
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Kirim Konfirmasi';
     }
   });
-
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
 
   loadRsvps();
 });

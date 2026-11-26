@@ -1,4 +1,4 @@
-const SUPABASE_URL = 'https://PROJECT_ID_KAMU.supabase.co';
-const SUPABASE_ANON_KEY = 'ANON_KEY_KAMU';
+const SUPABASE_URL = 'https://rzhlkitaxwohpilrtyfb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_V9AOI6PvaY4N4vBMfC6bYw_cN-hgS53';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
